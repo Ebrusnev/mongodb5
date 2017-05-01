@@ -225,7 +225,7 @@ MongoClient.connect(url, function(err, db) {
 		db.close();
 	})*/
 
-	db.collection('posts')
+/*	db.collection('posts')
 	.updateMany({
 			'comments':{$elemMatch: {$and: [{
 				'author.age': {$lt: 18}
@@ -241,7 +241,7 @@ MongoClient.connect(url, function(err, db) {
 		}
 		console.log("success");
 		db.close();
-	})
+	})*/
 
 
 /*	db.collection('posts')
@@ -259,4 +259,24 @@ MongoClient.connect(url, function(err, db) {
 		console.log(docs);
 		db.close();
 	})*/
+
+
+
+					//-----------12*---------\\
+
+	db.collection('posts')
+	.find({$and: [{
+			'published': true
+			}, {
+			$where: "this.tags.length > 5"
+			
+		}]
+	})
+	.count(function(err, docs){
+		if (err) {
+			return console.log("Error", err);
+		}
+		console.log(docs);
+		db.close();
+	})
 });
